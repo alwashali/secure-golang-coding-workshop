@@ -60,6 +60,7 @@ go version go1.15 linux/amd64
 ```sh
 cd $HOME/go/src
 git clone https://github.com/alwashali/secure-golang-web-app-demo
+cd secure-golang-web-app-demo/
 ```
 
 ## Generate ssl certificates
