@@ -87,4 +87,10 @@ go run main.go
 ```
 
 Once you are in enjoying the cat video, then create a new user by visiting https://localhost:8080/signup
+Ater using the app, you can see the logs stored in logs.txt 
+
+```sh
+cat logs.txt
+```
+
 
