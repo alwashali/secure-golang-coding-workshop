@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="templates/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <div class="bodyHead">
+      <h2>Sign up</h2>
+    </div>
+    
+      <div class="formcontainer">
+      <hr/>
+      <div class="container">
+        <label for="uname"><strong>Username</strong></label>
+        <input type="text" placeholder="Enter Name" id="nametxtbox" required>
+
+        <label for="email"><strong>Email</strong></label>
+        <input type="text" placeholder="Enter Email" id="emailtxtbox" required>
+
+        <label for="pass"><strong>Password</strong></label>
+        <input type="password" placeholder="Enter Password " id="passtxtbox" 
+        autocomplete="off" required>
+        <label for="pass"><strong>Confirm Password</strong></label>
+        <input type="password" placeholder="Enter Password " id="passtxtbox2" 
+        autocomplete="off" required>
+        {{ .csrfField }}
+        
+        <button type="button" id="regsiterButton">Send</button>
+
+      </div>
+
+    <p id='responseMessage'></p>
+
+    <script>
+
+      var sendButton = document.getElementById("regsiterButton") 
+      let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
+      function sendFormValues(){
+        var name = document.getElementById("nametxtbox").value;
+        var email = document.getElementById("emailtxtbox").value;
+        var pass = document.getElementById("passtxtbox").value
+        var pass2 = document.getElementById("passtxtbox2").value
+
+        if (pass != pass2) {
+            document.getElementById("responseMessage").innerHTML= "Password don't match"
+            return false;
+        }
+        const xhr = new XMLHttpRequest(),
+                method = "POST",
+                url = "https://localhost:8080/signup";
+
+            xhr.open(method, url, true);
+            xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 500)) {
+                  document.getElementById("responseMessage").innerHTML= xhr.responseText
+                } else {
+                  // Oh no! There has been an error with the request!
+                }
+              }
+            };
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({ "username": name, "email":email, "password":pass}));
+      }
+
+      sendButton.addEventListener("click", sendFormValues);
+
+  </script>
+
+    
+
+  </body>
+</html>

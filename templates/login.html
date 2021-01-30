@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="templates/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+   
+  </head>
+  <body>
+    <div class="bodyHead">
+      <h2>Welcome </h2>
+    </div>
+      <h2>Login</h2>
+      <div class="formcontainer">
+      <hr/>
+      <div class="container">
+        <label for="uname"><strong>Username</strong></label>
+        <input type="text" placeholder="Enter Username"  id="unametxtbox" required>
+        <label for="psw"><strong>Password</strong></label>
+        <input type="password" placeholder="Enter Password" id="passtxtbox" autocomplete="off" required>
+        {{ .csrfField }}
+      </div>
+      <button type="button" id="loginButton" >Login</button>
+
+      <p id="flashMessage"></p>
+
+      <script>
+       var sendButton = document.getElementById("loginButton") 
+       function sendLoginFormValues(){
+          var uname = document.getElementById("unametxtbox").value;
+          var pass = document.getElementById("passtxtbox").value;
+          let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
+          const xhr = new XMLHttpRequest(),
+                  method = "POST",
+                  url = "https://localhost:8080/login";
+
+              xhr.open(method, url, true);
+              xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+              xhr.onreadystatechange = function () {
+                if(xhr.readyState === XMLHttpRequest.DONE) {
+                  var status = xhr.status;
+                  if (status === 0 ||  (status >= 401 && status > 400)) {
+                    document.getElementById("flashMessage").innerHTML=xhr.response
+                  } else if (status === 0 ||  status === 200)
+                    {
+                        window.location="https://localhost:8080/contactform";
+                    }
+                    
+                  }
+                }
+                xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                xhr.send(JSON.stringify({ "username": uname, "password":pass}))
+              };
+              
+
+        sendButton.addEventListener("click", sendLoginFormValues);
+
+      </script>
+  </body>
+</html>

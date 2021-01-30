@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>talk to us</title>
+    <link href="templates/css/style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+  </head>
+
+  <body>
+    <div class="bodyHead">
+      <h2>You must not see this page if not logged in</h2>
+      <h5>If the functionality is to enter only the logged in user data, then better not to ask for name and email since we already have them from the active session</h5>
+    </div>
+    
+      <div class="formcontainer">
+      
+      <div class="container">
+        <label for="uname"><strong>Name</strong></label>
+        <input type="text" placeholder="Enter Name"  id="nametxtbox" autocomplete="off"  required>
+
+        <label for="email"><strong>Email</strong></label>
+        <input type="text" placeholder="Enter Email" id="emailtxtbox" autocomplete="off"  required>
+
+        <label for="dob"><strong>Date of birth</strong></label>
+        <input type="text" placeholder="Enter DOB: dd/mm/yyyy " id="dobtxtbox" autocomplete="off" required>
+
+        <label for="ssn"><strong>SSN</strong></label>
+        <input type="text" placeholder="Enter SSN: AAA-GG-SSSS" id="ssntxtbox" autocomplete="off" required>
+        {{ .csrfField }}
+        <button type="button" id="sendButton">Send</button>
+        <button type="button" id="logoutButton" >Logout</button>
+        
+      </div>
+      
+
+    <p id='responseMessage'></p>
+
+    <script>
+
+      var sendButton = document.getElementById("sendButton") 
+      var LogoutButton = document.getElementById("logoutButton")
+      let csrfToken = document.getElementsByName("gorilla.csrf.Token")[0].value
+      function sendFormValues(){
+        var name = document.getElementById("nametxtbox").value;
+        var email = document.getElementById("emailtxtbox").value;
+        var dob = document.getElementById("dobtxtbox").value
+        var ssn = document.getElementById("ssntxtbox").value
+      
+
+        const xhr = new XMLHttpRequest(),
+                method = "POST",
+                url = "https://localhost:8080/contact";
+
+            xhr.open(method, url, true);
+            xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 500)) {
+                  document.getElementById("responseMessage").innerHTML= xhr.responseText
+
+                  document.getElementById("nametxtbox").value = " ";
+                  document.getElementById("emailtxtbox").value = " ";
+                  document.getElementById("dobtxtbox").value = " ";
+                  document.getElementById("ssntxtbox").value = " ";
+      
+                } else {
+
+                  document.getElementById("nametxtbox").value = " ";
+                  document.getElementById("emailtxtbox").value = " ";
+                  document.getElementById("dobtxtbox").value = " ";
+                  document.getElementById("ssntxtbox").value = " ";
+                 
+                }
+              }
+            };
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.send(JSON.stringify({ "name": name, "email":email, "dob":dob,"ssn":ssn}));
+      }
+
+      function logout(){
+        const xhr = new XMLHttpRequest(),
+                method = "GET",
+                url = "https://localhost:8080/logout";
+            xhr.open(method, url, true);
+            xhr.setRequestHeader("X-CSRF-Token", csrfToken)
+            xhr.onreadystatechange = function () {
+              if(xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status >= 200 && status < 400)) {
+                  window.location= "https://localhost:8080"
+
+                } else {
+                  // Oh no! There has been an error with the request!
+                }
+              }
+            };
+            xhr.send();
+      }
+
+      sendButton.addEventListener("click", sendFormValues);
+      LogoutButton.addEventListener("click", logout);
+
+  </script>
+
+    
+
+  </body>
+</html>
