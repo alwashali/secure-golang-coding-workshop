@@ -59,7 +59,7 @@ go version go1.15 linux/amd64
 
 ```sh
 cd $HOME/go/src
-go get github.com/alwashali/secure-golang-web-app-demo
+go get https://github.com/alwashali/secure-golang-web-app-demo.git
 ```
 
 ## Generate ssl certificates
