@@ -84,7 +84,8 @@ echo "CSRFKEY={replace with your  32 character CSRFKEY key}" >> .env
 go run main.go
 ```
 
-Once you are in enjoying the cat video, then create a new user by visiting https://localhost:8080/signup
+## Logs
+Once you are in and enjoying the cat video, then create a new user by visiting https://localhost:8080/signup
 Ater using the app, you can see the logs stored in logs.txt 
 
 ```sh
