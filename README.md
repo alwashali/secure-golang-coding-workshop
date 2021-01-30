@@ -58,7 +58,7 @@ go version go1.15 linux/amd64
 ## Clone the repo
 
 ```sh
-cd $HOME/go
+cd $HOME/go/src
 go get github.com/alwashali/secure-golang-web-app-demo
 ```
 
