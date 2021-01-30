@@ -1,7 +1,6 @@
 # secure-golang-web-app-demo
-Demo app to demonstrate security mechanism implementations 
+Simple API based Web App using golang gorilla mux to demonstrate security mechanism implementations 
 
-API based Web App using golang gorilla mux
 
 Following are the security mechanisms implemented in the app
 
