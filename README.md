@@ -21,7 +21,7 @@ Following are the security mechanisms implemented in the app
 - Autocomplete="off" for html sensitive input box
 - Rate limit protection
 - Disabling Caching  
-- .gitignore keys, .env, and database
+- .gitignore: keys, .env, and database
 
 ## Discussion
 
