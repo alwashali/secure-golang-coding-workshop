@@ -1,6 +1,7 @@
-# secure-golang-web-app-demo
+# secure-golang coding workshop 
 Simple API based Web App using golang gorilla mux to demonstrate security mechanism implementations 
 
+Don't use this app, it's for training purposes only
 
 Following are the security mechanisms implemented in the app
 
